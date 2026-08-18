@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Caça Preço — Ofertas de esporte e tecnologia no WhatsApp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #EEF2F6;
+    --panel: #FFFFFF;
+    --ink: #0F2A4A;
+    --ink-soft: #47597A;
+    --orange: #FF5A1F;
+    --orange-dark: #E24A12;
+    --orange-tint: #FFE7DA;
+    --blue: #1C4ED8;
+    --line: #D7E0EA;
+    --radius: 18px;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Work Sans', sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .display{
+    font-family:'Anton', sans-serif;
+    font-weight:400;
+    text-transform:uppercase;
+    letter-spacing:0.01em;
+    line-height:0.95;
+  }
+
+  .mono{
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:600;
+  }
+
+  a{color:inherit;}
+
+  .wrap{
+    max-width:1120px;
+    margin:0 auto;
+    padding:0 28px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+
+  /* NAV */
+  nav{
+    padding:24px 0;
+  }
+  nav .wrap{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:20px;
+  }
+  .logo-mark{
+    width:34px; height:34px;
+    border-radius:50%;
+    background:var(--orange);
+    position:relative;
+    flex-shrink:0;
+  }
+  .logo-mark::before, .logo-mark::after{
+    content:'';
+    position:absolute;
+    border-radius:50%;
+    border:2px solid rgba(255,255,255,0.85);
+  }
+  .logo-mark::before{ inset:6px; }
+  .logo-mark::after{ inset:13px; background:#fff; border:none; }
+  .logo-text{ font-family:'Anton', sans-serif; text-transform:uppercase; font-size:19px; letter-spacing:0.02em; }
+  .logo-text span{ color:var(--orange); }
+
+  .nav-cta{
+    background:var(--ink);
+    color:#fff;
+    padding:11px 22px;
+    border-radius:999px;
+    font-weight:600;
+    font-size:14px;
+    text-decoration:none;
+    white-space:nowrap;
+  }
+
+  /* HERO */
+  .hero{
+    position:relative;
+    padding:56px 0 80px;
+    overflow:hidden;
+  }
+  .radar-field{
+    position:absolute;
+    top:-220px; right:-260px;
+    width:640px; height:640px;
+    border-radius:50%;
+    background:
+      repeating-radial-gradient(circle at center, transparent 0, transparent 78px, rgba(15,42,74,0.06) 79px, rgba(15,42,74,0.06) 80px);
+    pointer-events:none;
+  }
+  .radar-field::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    border-radius:50%;
+    background:conic-gradient(from 0deg, rgba(255,90,31,0.28), transparent 28%);
+    animation:sweep 6s linear infinite;
+  }
+  @keyframes sweep{ to{ transform:rotate(360deg); } }
+
+  .hero-grid{
+    position:relative;
+    display:grid;
+    grid-template-columns:1.05fr 0.95fr;
+    gap:56px;
+    align-items:center;
+  }
+
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--orange-tint);
+    color:var(--orange-dark);
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:600;
+    font-size:12.5px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    padding:7px 14px;
+    border-radius:999px;
+    margin-bottom:22px;
+  }
+  .eyebrow::before{
+    content:'';
+    width:7px; height:7px;
+    border-radius:50%;
+    background:var(--orange);
+  }
+
+  .hero h1{
+    font-size:clamp(38px, 5.4vw, 62px);
+    color:var(--ink);
+  }
+  .hero h1 em{
+    font-style:normal;
+    color:var(--orange);
+  }
+
+  .hero p.lede{
+    margin-top:22px;
+    font-size:18px;
+    color:var(--ink-soft);
+    max-width:46ch;
+  }
+
+  .hero-actions{
+    margin-top:32px;
+    display:flex;
+    align-items:center;
+    gap:18px;
+    flex-wrap:wrap;
+  }
+
+  .btn-primary{
+    background:var(--orange);
+    color:#fff;
+    padding:16px 30px;
+    border-radius:999px;
+    font-weight:700;
+    font-size:16px;
+    text-decoration:none;
+    box-shadow:0 14px 28px -12px rgba(255,90,31,0.55);
+    transition:transform 0.15s ease, box-shadow 0.15s ease;
+    display:inline-block;
+  }
+  .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 18px 32px -12px rgba(255,90,31,0.6); }
+  .btn-primary:focus-visible{ outline:3px solid var(--blue); outline-offset:3px; }
+
+  .hero-note{
+    font-size:13.5px;
+    color:var(--ink-soft);
+  }
+
+  /* PHONE MOCK */
+  .phone{
+    position:relative;
+    justify-self:center;
+    width:290px;
+    background:var(--ink);
+    border-radius:36px;
+    padding:14px;
+    box-shadow:0 40px 70px -30px rgba(15,42,74,0.45);
+  }
+  .phone-screen{
+    background:#DDEBE3;
+    border-radius:24px;
+    padding:18px 14px 22px;
+    min-height:420px;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    gap:10px;
+  }
+  .phone-header{
+    position:absolute;
+    top:14px; left:14px; right:14px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color:#fff;
+    font-size:13px;
+    font-weight:600;
+    padding-bottom:10px;
+  }
+  .phone-avatar{
+    width:30px; height:30px;
+    border-radius:50%;
+    background:var(--orange);
+    display:flex; align-items:center; justify-content:center;
+    font-size:14px;
+  }
+  .bubble{
+    background:#fff;
+    border-radius:14px;
+    padding:12px 14px;
+    font-size:13.5px;
+    box-shadow:0 4px 10px -4px rgba(15,42,74,0.2);
+    max-width:92%;
+  }
+  .bubble strong{ display:block; color:var(--orange-dark); font-size:14.5px; margin-bottom:4px; }
+  .bubble .price-old{ text-decoration:line-through; color:#8a94a3; }
+  .bubble .price-new{ font-family:'IBM Plex Mono', monospace; font-weight:600; color:var(--ink); }
+  .bubble .price-new::before{ content:'R$ '; }
+  .bubble-meta{ font-size:11px; color:#9aa5b3; margin-top:6px; }
+
+  /* HOW IT WORKS */
+  .section{ padding:76px 0; }
+  .section-head{ max-width:640px; margin-bottom:46px; }
+  .section-head .eyebrow{ background:transparent; padding:0; color:var(--orange-dark); }
+  .section-head .eyebrow::before{ display:none; }
+  .section-head h2{
+    font-size:clamp(28px, 3.6vw, 40px);
+    margin-top:10px;
+  }
+  .section-head p{
+    margin-top:14px;
+    color:var(--ink-soft);
+    font-size:16.5px;
+  }
+
+  .steps{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:22px;
+  }
+  .step{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:28px 24px;
+  }
+  .step-num{
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:600;
+    color:var(--orange);
+    font-size:13px;
+    margin-bottom:14px;
+  }
+  .step h3{
+    font-family:'Anton', sans-serif;
+    text-transform:uppercase;
+    font-size:20px;
+    margin-bottom:10px;
+  }
+  .step p{ color:var(--ink-soft); font-size:14.5px; }
+
+  /* STORES */
+  .stores-section{
+    background:var(--ink);
+    color:#fff;
+    padding:64px 0;
+  }
+  .stores-section .section-head p{ color:#B9C6D9; }
+  .stores-section .section-head h2{ color:#fff; }
+  .stores-section .eyebrow{ color:var(--orange); }
+
+  .store-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+  .chip{
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.16);
+    padding:12px 20px;
+    border-radius:999px;
+    font-weight:600;
+    font-size:14.5px;
+  }
+
+  /* FINAL CTA */
+  .cta-section{
+    padding:88px 0;
+    text-align:center;
+  }
+  .cta-card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:28px;
+    padding:60px 32px;
+    max-width:680px;
+    margin:0 auto;
+    position:relative;
+    overflow:hidden;
+  }
+  .cta-card::before{
+    content:'';
+    position:absolute;
+    width:260px; height:260px;
+    background:var(--orange-tint);
+    border-radius:50%;
+    top:-120px; left:-100px;
+  }
+  .cta-card h2{
+    position:relative;
+    font-size:clamp(26px, 3.4vw, 36px);
+    margin-bottom:16px;
+  }
+  .cta-card p{
+    position:relative;
+    color:var(--ink-soft);
+    font-size:16px;
+    max-width:44ch;
+    margin:0 auto 28px;
+  }
+  .cta-card .btn-primary{ position:relative; }
+
+  /* FOOTER */
+  footer{
+    border-top:1px solid var(--line);
+    padding:36px 0 48px;
+  }
+  footer .wrap{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:24px;
+    flex-wrap:wrap;
+  }
+  .footer-disclaimer{
+    max-width:52ch;
+    font-size:13px;
+    color:var(--ink-soft);
+  }
+  .footer-brand{
+    font-family:'Anton', sans-serif;
+    text-transform:uppercase;
+    font-size:16px;
+  }
+  .footer-brand span{ color:var(--orange); }
+
+  @media (max-width: 860px){
+    .hero-grid{ grid-template-columns:1fr; }
+    .phone{ justify-self:center; order:-1; margin-bottom:12px; }
+    .steps{ grid-template-columns:1fr; }
+    .radar-field{ top:-260px; right:-320px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="logo">
+      <div class="logo-mark"></div>
+      <div class="logo-text">Caça<span>Preço</span></div>
+    </div>
+    <a class="nav-cta" href="#entrar">Entrar no grupo</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="radar-field" aria-hidden="true"></div>
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Radar de ofertas ativo</span>
+      <h1 class="display">A gente <em>caça</em><br>a oferta.<br>Você só aproveita.</h1>
+      <p class="lede">Monitoramos preços de esporte e tecnologia o tempo todo. Quando a queda é de verdade — não "desconto" inventado — chega direto no seu WhatsApp, com uma legenda que arranca um sorriso.</p>
+      <div class="hero-actions">
+        <a class="btn-primary" href="#entrar" id="whatsapp-cta">Entrar no grupo</a>
+        <span class="hero-note">Grátis, sem spam, saia quando quiser.</span>
+      </div>
+    </div>
+
+    <div class="phone" role="img" aria-label="Exemplo de mensagem de oferta enviada no WhatsApp">
+      <div class="phone-header">
+        <div class="phone-avatar">🎯</div>
+        Caça Preço
+      </div>
+      <div class="phone-screen">
+        <div class="bubble">
+          <strong>🎯 Feio sim, fedido nunca</strong>
+          Perfume Invictus <span class="price-old">R$ 219,90</span><br>
+          <span class="price-new">149,90</span>
+          <div class="bubble-meta">via Mercado Livre · agora mesmo</div>
+        </div>
+        <div class="bubble">
+          <strong>🏀 Sua quadra tá pedindo socorro</strong>
+          Chuteira society Penalty <span class="price-old">R$ 349,00</span><br>
+          <span class="price-new">239,90</span>
+          <div class="bubble-meta">via Netshoes · agora mesmo</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Como funciona</span>
+      <h2 class="display">Três passos. Nenhuma enrolação.</h2>
+      <p>Sem promessa vazia de "desconto imperdível" — só oferta que caiu de fato, comparada com o preço real de antes.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num mono">01 — MONITORAMOS</div>
+        <h3>Preço, o dia inteiro</h3>
+        <p>Ficamos de olho nos preços de Mercado Livre, Netshoes, Centauro, Kabum e Shopee sem parar.</p>
+      </div>
+      <div class="step">
+        <div class="step-num mono">02 — COMPARAMOS</div>
+        <h3>Com o histórico real</h3>
+        <p>Cada oferta é confrontada com o preço praticado antes — nada de "de/por" inflado pra parecer promoção.</p>
+      </div>
+      <div class="step">
+        <div class="step-num mono">03 — AVISAMOS</div>
+        <h3>Só quando vale a pena</h3>
+        <p>A oferta chega no grupo com uma legenda na medida — e você decide se compra ou só dá risada.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="stores-section">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow mono">Fontes monitoradas</span>
+      <h2 class="display">De onde vêm as ofertas</h2>
+      <p>Categorias de esporte e tecnologia, direto das lojas — sem link furado, sem cupom vencido.</p>
+    </div>
+    <div class="store-row">
+      <span class="chip">Mercado Livre</span>
+      <span class="chip">Netshoes</span>
+      <span class="chip">Centauro</span>
+      <span class="chip">Kabum</span>
+      <span class="chip">Shopee</span>
+      <span class="chip">Amazon</span>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section" id="entrar">
+  <div class="wrap">
+    <div class="cta-card">
+      <h2 class="display">Bora caçar oferta junto?</h2>
+      <p>Entre no grupo e receba os achados assim que forem confirmados. Sem enrolação, sem mensagem em excesso.</p>
+      <a class="btn-primary" href="https://chat.whatsapp.com/SEU-LINK-AQUI" id="whatsapp-link">Entrar no grupo do WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-brand">Caça<span>Preço</span></div>
+    <p class="footer-disclaimer">Caça Preço participa de programas de afiliados (Mercado Livre, Rakuten, Awin e Shopee). Ao comprar por um link daqui, o preço pra você não muda — mas ajuda a manter o projeto rodando. 🎯</p>
+  </div>
+</footer>
+
+</body>
+</html>
